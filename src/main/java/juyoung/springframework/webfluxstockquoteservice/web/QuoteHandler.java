@@ -25,7 +25,13 @@ public class QuoteHandler {
         int size = Integer.parseInt(request.queryParam("size").orElse("10"));
 
         return ok().contentType(MediaType.APPLICATION_JSON)
-                .body(this.quoteGeneratorService.fetchQuoteStream(Duration.ofMillis(100L))
+                .body(this.quoteGeneratorService.fetchQuoteStream(Duration.ofMillis(100))
                 .take(size), Quote.class);
+    }
+
+    public Mono<ServerResponse> streamQuotes(ServerRequest request){
+        return ok().contentType(MediaType.APPLICATION_JSON)
+                .body(this.quoteGeneratorService.fetchQuoteStream(Duration.ofMillis(200)), Quote.class);
+
     }
 }
